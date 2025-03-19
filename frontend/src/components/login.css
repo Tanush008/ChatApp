@@ -1,0 +1,6 @@
+.watermark {
+  background-image: url("/path/to/your/watermark.png"); /* Replace with the path to your watermark image */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
