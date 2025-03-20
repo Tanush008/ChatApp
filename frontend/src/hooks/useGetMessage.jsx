@@ -7,14 +7,14 @@ import { setMessages } from '../store/messageSlice';
 
 const useGetMessages = () => {
     const { selectedUsers } = useSelector(store => store.auth);
-    console.log(selectedUsers);
+    // console.log(selectedUsers);
     const dispatch = useDispatch();
     useEffect(() => {
         const fetchMessages = async () => {
             try {
                 axios.defaults.withCredentials = true;
                 const res = await axios.get(`${MESSAGE_API_END_POINT}/get/${selectedUsers?._id}`);
-                console.log(res.data);
+                // console.log(res.data);
                 dispatch(setMessages(res.data))
             } catch (error) {
                 console.log(error);

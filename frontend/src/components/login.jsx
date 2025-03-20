@@ -33,9 +33,9 @@ const Login = () => {
                 },
                 withCredentials: true
             });
-            console.log(res.data);
+            // console.log(res.data);
             if (res.data.success) {
-                navigate('/TestFrontPage');
+                navigate('/frontPage');
                 dispatch(setAuthUser(res.data));
             }
             alert('Login successful!');

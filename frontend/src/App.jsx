@@ -40,7 +40,7 @@ function App() {
     },
     {
       path: '/selectUser',
-      element: <TestUser />
+      element: <OtherUsers />
     }
   ])
   return (

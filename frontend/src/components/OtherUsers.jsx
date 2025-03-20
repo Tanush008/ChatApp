@@ -1,28 +1,23 @@
 import React from 'react';
-import { useSelector } from "react-redux";
-import useGetOtherUsers from '../hooks/useGetOtherUsers';
+import { useSelector } from 'react-redux';
 import OtherUser from './OtherUser';
+import useGetOtherUsers from '../hooks/useGetOtherUsers';
 
 const OtherUsers = () => {
-    // Custom hook to fetch other users
     useGetOtherUsers();
-
-    // Fetch otherUsers from Redux store
-    const { otherUsers } = useSelector(store => store.auth);
-    console.log(otherUsers);
-
-    // Early return if otherUsers is not an array or is empty
-    if (!Array.isArray(otherUsers) || otherUsers.length === 0) {
-        return <p className="text-center text-gray-500">No users found.</p>;
-    }
+    const { otherUsers } = useSelector((store) => store.auth);
 
     return (
-        <div className='overflow-auto flex-1 p-4'>
-            {
-                otherUsers.map((users) => (
-                    <OtherUser key={users._id} user={users} />
-                ))
-            }
+        <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-300 shadow-lg p-6">
+            <div className="flex flex-col gap-4">
+                {Array.isArray(otherUsers.user) && otherUsers.user.length > 0 ? (
+                    otherUsers.user.map((user) => (
+                        <OtherUser key={user._id} user={user} />
+                    ))
+                ) : (
+                    <p className="text-gray-200">No users found.</p>
+                )}
+            </div>
         </div>
     );
 };

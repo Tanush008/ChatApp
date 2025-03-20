@@ -1,34 +1,40 @@
-import React from 'react'
-import { useDispatch, useSelector } from "react-redux";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedUsers } from '../store/userSlice';
-// import { setSelectedUser } from '../redux/userSlice';
 
 const OtherUser = ({ user }) => {
-    console.log(user);
-    const dispatch = useDispatch();
-    const { selectedUsers } = useSelector(store => store.auth);
-    // const isOnline = onlineUsers?.includes(users._id);
-    const selectedUserHandler = (user) => {
-        dispatch(setSelectedUsers(user));
-    }
-    console.log(selectedUsers);
-    return (
-        <>
-            <div onClick={() => selectedUserHandler(user)} className={` ${selectedUsers?._id === user?._id ? 'bg-red-200 text-black' : 'text-black'} flex gap-2 hover:text-black items-center hover:bg-zinc-200 rounded p-2 cursor-pointer`}>
-                {/* <div className={`avatar ${isOnline ? 'online' : ''}`}> */}
-                <div className='w-12 rounded-full'>
-                    <img src={user?.profilePhoto} alt="user-profile" />
-                    {/* </div> */}
-                </div>
-                <div className='flex flex-col flex-1'>
-                    <div className='flex justify-between gap-2 '>
-                        <p>{user?.name}</p>
-                    </div>
-                </div>
-            </div>
-            <div className='divider my-0 py-0 h-1'></div>
-        </>
-    )
-}
+  const dispatch = useDispatch();
+  const { selectedUsers } = useSelector((store) => store.auth);
 
-export default OtherUser
+  const selectedUserHandler = (user) => {
+    dispatch(setSelectedUsers(user));
+  };
+
+  return (
+    <div
+      onClick={() => selectedUserHandler(user)}
+      className="group flex items-center rounded-lg p-4 cursor-pointer shadow-md hover:shadow-lg hover:bg-blue-500 hover:text-white transition duration-300 w-full"
+    >
+      {/* User Avatar */}
+      <div className="w-12 h-12 rounded-full overflow-hidden">
+        <img
+          src={user?.profilePhoto || 'https://archive.org/download/whatsapp-smiling-guy-i-accidentally-made/whatsapp%20generic%20person%20dark.jpg'}
+          alt="user-profile"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* User Details */}
+      <div className="ml-4 flex-1">
+        <p className="text-sm font-bold">{user?.name || 'Unknown User'}</p>
+      </div>
+
+      {/* Expand on Hover */}
+      <div className="hidden group-hover:block bg-blue-500 text-white rounded-lg px-4 py-2 absolute right-0">
+        <p className="text-xs">Full Width</p>
+      </div>
+    </div>
+  );
+};
+
+export default OtherUser;
