@@ -5,12 +5,11 @@ import Login from './components/login'
 import Signup from './components/signup'
 import Profile from './components/Profile'
 import FrontPage from './components/frontPage'
-import TestFrontPage from './components/TestFrontPage'
+// import TestFrontPage from './components/TestFrontPage'
 import OtherUsers from './components/OtherUsers'
 // import Message from './components/Message'
-import Messages from './components/Messages'
-import OtherUser from './components/OtherUser'
-import TestUser from './components/TestUser'
+import UpdateProfile from './components/UpdateProfile'
+import Settings from './components/Settings'
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -35,12 +34,16 @@ function App() {
       element: <FrontPage />
     },
     {
-      path: '/TestFrontPage',
-      element: <TestFrontPage />
-    },
-    {
       path: '/selectUser',
       element: <OtherUsers />
+    },
+    {
+      path: '/updateProfile',
+      element: <UpdateProfile />
+    },
+    {
+      path: '/settings',
+      element: <Settings />
     }
   ])
   return (

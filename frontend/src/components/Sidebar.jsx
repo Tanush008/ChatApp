@@ -1,9 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaHome, FaUserFriends, FaEnvelope, FaCog } from 'react-icons/fa';
 import SmallPartition from './SmallPartition';
+import { useSelector } from 'react-redux';
 
-const Sidebar = ({ user }) => {
+const Sidebar = () => {
+    const { user } = useSelector(store => store.auth)
+    const navigate = useNavigate()
+    // console.log(user);
     return (
         <div className="h-screen w-25 bg-gradient-to-b from-gray-900 to-gray-800 text-gray-300 flex flex-col justify-between py-6 shadow-lg rounded-lg">
             {/* Navigation Links */}
@@ -44,9 +48,10 @@ const Sidebar = ({ user }) => {
                     <div className="flex flex-col items-center">
                         <div className="w-10 h-10 rounded-full overflow-hidden">
                             <img
-                                src={user?.profilePhoto || 'https://archive.org/download/whatsapp-smiling-guy-i-accidentally-made/whatsapp%20generic%20person%20dark.jpg'}
+                                src={user?.avatar || 'https://archive.org/download/whatsapp-smiling-guy-i-accidentally-made/whatsapp%20generic%20person%20dark.jpg'}
                                 alt="user-profile"
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover cursor-pointer    "
+                                onClick={() => navigate('/updateProfile')}
                             />
                         </div>
                     </div>
@@ -56,6 +61,7 @@ const Sidebar = ({ user }) => {
                     {/* Settings Icon */}
                     <Link
                         to="/settings"
+                        onClick={() => navigate('/settings')}
                         className="flex items-center justify-center p-2 rounded-lg hover:bg-gray-700 transition duration-300"
                     >
                         <FaCog className="text-xl text-gray-300" />

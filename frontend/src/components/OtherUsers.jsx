@@ -5,7 +5,8 @@ import useGetOtherUsers from '../hooks/useGetOtherUsers';
 
 const OtherUsers = () => {
     useGetOtherUsers();
-    const { otherUsers } = useSelector((store) => store.auth);
+    const { otherUsers } = useSelector((store) => store.auth);  
+    
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-300 shadow-lg p-6">
