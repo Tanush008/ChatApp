@@ -12,6 +12,8 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import themeReducer from './themeSlice';
+
 const persistConfig = {
   key: "root",
   version: 1,
@@ -21,6 +23,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: userSlice,
   message: messageSlice,
+  theme: themeReducer
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({

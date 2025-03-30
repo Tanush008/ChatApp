@@ -11,6 +11,52 @@ const UpdateProfile = () => {
     const dispatch = useDispatch();
     const { user } = useSelector(store => store.auth);
     const fileInputRef = useRef(null);
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+    // Theme configuration
+    const theme = {
+        dark: {
+            background: 'bg-gradient-to-r from-gray-900 to-gray-800',
+            container: 'bg-gray-800',
+            text: 'text-white',
+            subText: 'text-gray-300',
+            input: {
+                bg: 'bg-gray-700',
+                border: 'border-transparent',
+                focus: 'focus:border-blue-500 focus:ring-2 focus:ring-blue-500',
+                text: 'text-white',
+                placeholder: 'placeholder-gray-400'
+            },
+            button: {
+                primary: 'bg-blue-600 hover:bg-blue-700',
+                disabled: 'bg-gray-600'
+            },
+            ring: 'ring-blue-500',
+            shadow: 'shadow-xl shadow-gray-900/50'
+        },
+        light: {
+            background: 'bg-gradient-to-r from-gray-100 to-white',
+            container: 'bg-white',
+            text: 'text-gray-900',
+            subText: 'text-gray-600',
+            input: {
+                bg: 'bg-gray-50',
+                border: 'border-gray-300',
+                focus: 'focus:border-blue-500 focus:ring-2 focus:ring-blue-500',
+                text: 'text-gray-900',
+                placeholder: 'placeholder-gray-500'
+            },
+            button: {
+                primary: 'bg-blue-500 hover:bg-blue-600',
+                disabled: 'bg-gray-300'
+            },
+            ring: 'ring-blue-400',
+            shadow: 'shadow-lg shadow-gray-200/50'
+        }
+    };
+
+    const currentTheme = isDarkMode ? theme.dark : theme.light;
+
     const [formData, setFormData] = useState({
         name: user?.name || '',
         email: user?.email || '',
@@ -21,7 +67,6 @@ const UpdateProfile = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
-f
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -73,17 +118,17 @@ f
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-r from-gray-900 to-gray-800 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto bg-gray-800 rounded-lg shadow-xl p-8">
+        <div className={`min-h-screen ${currentTheme.background} py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300`}>
+            <div className={`max-w-3xl mx-auto ${currentTheme.container} rounded-lg ${currentTheme.shadow} p-8`}>
                 <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold text-white">Update Profile</h2>
+                    <h2 className={`text-3xl font-bold ${currentTheme.text}`}>Update Profile</h2>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Profile Photo */}
                     <div className="flex justify-center">
                         <div className="relative group">
-                            <div className="w-32 h-32 rounded-full overflow-hidden ring-4 ring-blue-500 ring-opacity-50">
+                            <div className={`w-32 h-32 rounded-full overflow-hidden ring-4 ${currentTheme.ring} ring-opacity-50`}>
                                 <img
                                     src={avatar ? URL.createObjectURL(avatar) : user?.avatar || "https://via.placeholder.com/150"}
                                     alt="Profile"
@@ -93,8 +138,9 @@ f
                             <button
                                 type="button"
                                 onClick={() => fileInputRef.current?.click()}
-                                className="absolute -top-2 -right-2 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center 
-                                         transform transition-all duration-300 hover:scale-110 hover:bg-blue-600 focus:outline-none"
+                                className={`absolute -top-2 -right-2 w-10 h-10 ${currentTheme.button.primary} rounded-full 
+                                    flex items-center justify-center transform transition-all duration-300 
+                                    hover:scale-110 focus:outline-none`}
                             >
                                 <FaCamera className="text-white text-xl" />
                             </button>
@@ -110,61 +156,53 @@ f
 
                     {/* Form Fields */}
                     <div className="grid grid-cols-1 gap-6 mt-8">
-                        {/* Name */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-300">Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleInputChange}
-                                className="mt-1 block w-full rounded-md bg-gray-700 border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500 text-white"
-                            />
-                        </div>
+                        {/* Input fields with theme */}
+                        {['name', 'email', 'password'].map((field) => (
+                            <div key={field}>
+                                <label className={`block text-sm font-medium ${currentTheme.subText} capitalize`}>
+                                    {field === 'password' ? 'New Password' : field}
+                                </label>
+                                <input
+                                    type={field === 'password' ? 'password' : 'text'}
+                                    name={field}
+                                    value={formData[field]}
+                                    onChange={handleInputChange}
+                                    placeholder={field === 'password' ? 'Leave blank to keep current password' : ''}
+                                    className={`mt-1 block w-full rounded-md 
+                                        ${currentTheme.input.bg} 
+                                        ${currentTheme.input.border}
+                                        ${currentTheme.input.focus}
+                                        ${currentTheme.input.text}
+                                        ${currentTheme.input.placeholder}
+                                        transition-colors duration-300`}
+                                />
+                            </div>
+                        ))}
 
-                        {/* Email */}
+                        {/* Bio field */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-300">Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                className="mt-1 block w-full rounded-md bg-gray-700 border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500 text-white"
-                            />
-                        </div>
-
-                        {/* Password */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-300">New Password</label>
-                            <input
-                                type="password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleInputChange}
-                                className="mt-1 block w-full rounded-md bg-gray-700 border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500 text-white"
-                                placeholder="Leave blank to keep current password"
-                            />
-                        </div>
-
-                        {/* Bio */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-300">Bio</label>
+                            <label className={`block text-sm font-medium ${currentTheme.subText}`}>Bio</label>
                             <textarea
                                 name="bio"
                                 value={formData.bio}
                                 onChange={handleInputChange}
                                 rows="4"
-                                className="mt-1 block w-full rounded-md bg-gray-700 border-transparent focus:border-blue-500 focus:ring-2 focus:ring-blue-500 text-white resize-none"
+                                className={`mt-1 block w-full rounded-md resize-none
+                                    ${currentTheme.input.bg}
+                                    ${currentTheme.input.border}
+                                    ${currentTheme.input.focus}
+                                    ${currentTheme.input.text}
+                                    ${currentTheme.input.placeholder}
+                                    transition-colors duration-300`}
                                 placeholder="Tell us about yourself..."
                             />
-                            <p className="mt-1 text-sm text-gray-400">
+                            <p className={`mt-1 text-sm ${currentTheme.subText}`}>
                                 {formData.bio.split(/\s+/).filter(word => word.length > 0).length}/200 words
                             </p>
                         </div>
                     </div>
 
-                    {/* Error and Success Messages */}
+                    {/* Messages */}
                     {error && (
                         <div className="text-red-500 text-sm mt-2">{error}</div>
                     )}
@@ -174,15 +212,15 @@ f
 
                     {/* Submit Button */}
                     <div className="flex justify-center mt-8">
-                        <button 
+                        <button
                             type="submit"
                             disabled={isLoading}
                             className={`
                                 px-8 py-3 rounded-full text-white text-lg font-medium
                                 transform transition-all duration-300
-                                ${isLoading
-                                    ? 'bg-gray-600 cursor-not-allowed'
-                                    : 'bg-blue-500 hover:bg-blue-600 hover:scale-105 hover:shadow-lg active:scale-95'
+                                ${isLoading 
+                                    ? currentTheme.button.disabled + ' cursor-not-allowed' 
+                                    : currentTheme.button.primary + ' hover:scale-105 hover:shadow-lg active:scale-95'
                                 }
                             `}
                         >

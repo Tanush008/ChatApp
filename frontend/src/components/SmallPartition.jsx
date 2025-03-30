@@ -1,8 +1,8 @@
 import React from 'react';
 
-const SmallPartition = () => {
+const SmallPartition = ({ isDarkMode }) => {
   return (
-    <div className="w-full border-t border-gray-600 my-2"></div>
+    <div className={`w-full h-px ${isDarkMode ? 'bg-gray-700' : 'bg-gray-200'} transition-colors duration-300`} />
   );
 };
 
