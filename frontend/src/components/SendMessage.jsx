@@ -9,7 +9,8 @@ import { setMessages } from '../store/messageSlice';
 const SendMessage = () => {
     const [message, setMessage] = useState("");
     const dispatch = useDispatch();
-    const { selectedUser } = useSelector(store => store.auth);
+    const { selectedUsers } = useSelector(store => store.auth);
+    // console.log(selectedUsers);
     const { messages } = useSelector(store => store.message);
     const isDarkMode = localStorage.getItem('darkMode') === 'true';
 
@@ -55,18 +56,19 @@ const SendMessage = () => {
 
         try {
             const res = await axios.post(
-                `${MESSAGE_API_END_POINT}/api/v1/messages/send/${selectedUser?._id}`, 
-                { message }, 
+                `${MESSAGE_API_END_POINT}/send/${selectedUsers?._id}`,
+                { message },
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
                 }
             );
+            // console.log(res.data);
             dispatch(setMessages([...messages, res?.data?.newMessage]));
-            setMessage("");
         } catch (error) {
             console.log(error);
         }
+        setMessage("");
     };
 
     return (
@@ -128,8 +130,8 @@ const SendMessage = () => {
                         disabled={!message.trim()}
                         className={`
                             p-2 rounded-full ml-1 transition-all duration-300
-                            ${message.trim() 
-                                ? 'text-blue-500 hover:text-blue-600 active:text-blue-700' 
+                            ${message.trim()
+                                ? 'text-blue-500 hover:text-blue-600 active:text-blue-700'
                                 : currentTheme.button.default}
                             transform hover:scale-110 active:scale-95
                         `}

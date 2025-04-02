@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import userSlice from "./userSlice.js";
-import messageSlice from "./messageSlice.js";
+import userSlice from "./userSlice";
+import messageSlice from "./messageSlice";
+import socketSlice from "./soketSlice"
 import {
   persistStore,
   persistReducer,
@@ -23,6 +24,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: userSlice,
   message: messageSlice,
+  socket: socketSlice,
   theme: themeReducer
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);

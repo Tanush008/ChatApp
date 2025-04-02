@@ -24,7 +24,6 @@ const userSlice = createSlice({
 });
 export const {
   setAuthUser,
-  setLoading,
   setOtherUsers,
   setSelectedUsers,
   setOnlineUsers,

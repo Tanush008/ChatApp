@@ -44,8 +44,8 @@ const Sidebar = () => {
         >
             <Icon className={`text-xl ${currentTheme.text} ${currentTheme.iconHover} transition-colors duration-300`} />
             <span className={`
-                absolute left-7 bottom-5 text-xs opacity-0 group-hover:opacity-100 
-                ${currentTheme.tooltip} rounded-md px-2 py-3 
+                absolute left-14 text-xs opacity-0 group-hover:opacity-100 
+                ${currentTheme.tooltip} rounded-md px-2 py-1 
                 transition-all duration-300 transform scale-95 group-hover:scale-100
                 whitespace-nowrap z-50
             `}>
@@ -53,7 +53,6 @@ const Sidebar = () => {
             </span>
         </Link>
     );
-
     return (
         <div className={`
             h-screen w-25 flex flex-col justify-between py-6 

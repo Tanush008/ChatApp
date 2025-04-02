@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import SendMessage from './SendMessage';
 
 const MessageContainer = () => {
-    const { selectedUsers, user } = useSelector((store) => store.auth);
+    const { selectedUsers, user } = useSelector(store => store.auth);
     const isDarkMode = localStorage.getItem('darkMode') === 'true';
 
     // Theme configuration

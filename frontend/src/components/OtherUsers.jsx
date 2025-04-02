@@ -5,7 +5,7 @@ import useGetOtherUsers from '../hooks/useGetOtherUsers';
 
 const OtherUsers = () => {
     useGetOtherUsers();
-    const { otherUsers } = useSelector((store) => store.auth);
+    const { otherUsers } = useSelector(store => store.auth);
     const isDarkMode = localStorage.getItem('darkMode') === 'true';
 
     // Theme configuration
@@ -45,8 +45,8 @@ const OtherUsers = () => {
                     {Array.isArray(otherUsers.user) && otherUsers.user.length > 0 ? (
                         otherUsers.user.map((user, index) => (
                             <React.Fragment key={user._id}>
-                                <OtherUser 
-                                    user={user} 
+                                <OtherUser
+                                    user={user}
                                     isDarkMode={isDarkMode}
                                 />
                                 {/* Add divider between users except for the last one */}
